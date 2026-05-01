@@ -140,7 +140,7 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
+# (do not ignore `site/` — this repo uses `site/` for the Next.js viewer)
 
 # mypy
 .mypy_cache/
@@ -174,3 +174,19 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# macOS
+.DS_Store
+
+# RL outputs / artifacts
+outputs/
+outputs_test/
+
+# Frontend build artifacts
+site/node_modules/
+site/.next/
+site/out/
+site/.netlify/
+
+# Local matplotlib cache (headless)
+.mplcache/

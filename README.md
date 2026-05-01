@@ -80,20 +80,122 @@ Detailed file-level documentation is available in documents/.
 
 
 ## How to Run
-### Train the Agent
-```
-python qlearning.py
+### Install (recommended)
+This repo is a Python project with a small CLI for training + exporting run bundles.
+
+If you can install editable packages:
+
+```bash
+python3 -m pip install -e .
 ```
 
-### Visualize Learned Policy
-```
-python visualize.py
+If you **cannot** install editable packages, you can still run everything by setting `PYTHONPATH`:
+
+```bash
+PYTHONPATH=src python3 -m cliff_walking_rp --help
 ```
 
-### Interactive Exploration
+### Train + export a run bundle (headless-safe default)
+Positive-only:
+
+```bash
+PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train --variant positive_only --episodes 200 --seed 123 --out outputs
 ```
-jupyter notebook qlearning.ipynb
+
+Traditional:
+
+```bash
+PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train --variant traditional --episodes 200 --seed 123 --out outputs
 ```
+
+Full CLI (all flags available):
+
+```bash
+PYTHONPATH=src python3 -m cliff_walking_rp train \
+  --variant positive_only \
+  --episodes 200 \
+  --gamma 0.1 \
+  --epsilon 0.08 \
+  --epsilon-decay 0.01 \
+  --alpha 1.0 \
+  --seed 123 \
+  --render none \
+  --out outputs
+```
+
+```bash
+PYTHONPATH=src python3 -m cliff_walking_rp train \
+  --variant traditional \
+  --episodes 200 \
+  --gamma 0.1 \
+  --epsilon 0.08 \
+  --epsilon-decay 0.01 \
+  --alpha 1.0 \
+  --seed 123 \
+  --render none \
+  --out outputs
+```
+
+This produces a folder like:
+
+```bash
+outputs/<variant>/<runId>/
+  summary.json
+  plots/returns.png
+  plots/steps.png
+  media/maxq_heatmaps.gif
+  trajectories.json
+  qtable.npy
+  qtable_snapshots.npy
+```
+
+### (Optional) Render during training
+Rendering is slower and requires `pygame` + a display.
+
+```bash
+PYTHONPATH=src python3 -m cliff_walking_rp train --variant positive_only --episodes 50 --render human --render-sleep 0.05
+```
+
+## Static viewer site (Netlify)
+The static viewer lives in `site/` (Next.js + TypeScript). It reads run bundles from:
+
+```bash
+site/public/runs/<runId>/
+```
+
+### Add a run to the site (manual sync)
+1) Train and export:
+
+```bash
+PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train --variant positive_only --episodes 200 --seed 123 --out outputs
+```
+
+2) Copy the run folder into the site:
+
+```bash
+mkdir -p site/public/runs/<runId>
+cp -R outputs/positive_only/<runId>/* site/public/runs/<runId>/
+```
+
+3) Update `site/public/runs/index.json` with an entry:
+
+```json
+{
+  "runId": "<runId>",
+  "variant": "positive_only",
+  "summaryPath": "<runId>/summary.json"
+}
+```
+
+### Build the site (static export)
+From `site/`:
+
+```bash
+npm install
+npm run build
+```
+
+The exported static site will be in `site/out/` (ready for Netlify).
 
 ## Tech Stack
 
