@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function ReflectionPage() {
   return (
-    <div className="grid">
-      <section className="card">
+    <div className="flow">
+      <section className="card section">
         <div className="prose">
           <h1>Reflection: AI, empathy, and R+ training</h1>
           <p>
@@ -13,10 +13,7 @@ export default function ReflectionPage() {
           </p>
         </div>
         <div className="kpi">
-          <Link className="pill pill--accent" href="/runs">
-            Browse runs
-          </Link>
-          <Link className="pill" href="/compare">
+          <Link className="pill pill--accent" href="/compare">
             Compare variants
           </Link>
           <a className="pill" href="/reflection.pdf">
@@ -25,7 +22,7 @@ export default function ReflectionPage() {
         </div>
       </section>
 
-      <section className="card">
+      <section className="card section">
         <div className="prose">
           <h2>Wait—what does a robot have to do with dog training?</h2>
           <p>
@@ -42,7 +39,7 @@ export default function ReflectionPage() {
         </div>
       </section>
 
-      <section className="card">
+      <section className="card section">
         <div className="prose">
           <h2>What changed with positive‑only rewards?</h2>
           <ul>
@@ -62,7 +59,7 @@ export default function ReflectionPage() {
         </div>
       </section>
 
-      <section className="card">
+      <section className="card section">
         <div className="prose">
           <h2>Read the full reflection</h2>
           <p>
@@ -84,4 +81,3 @@ export default function ReflectionPage() {
     </div>
   );
 }
-

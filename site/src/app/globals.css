@@ -151,6 +151,44 @@ a:hover {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
+.flow {
+  display: grid;
+  gap: 18px;
+}
+
+.section {
+  padding: 18px 18px;
+}
+
+.introBand,
+.setupBand {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(17, 26, 51, 0.78);
+}
+
+.section + .section {
+  margin-top: 2px;
+}
+
+.sectionTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sectionTitleRow .prose h2 {
+  margin: 0;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.10);
+  margin: 16px 0;
+}
+
 .grid2 {
   display: grid;
   gap: 16px;
@@ -160,6 +198,16 @@ a:hover {
 @media (max-width: 880px) {
   .grid2 {
     grid-template-columns: 1fr;
+  }
+
+  .comparisonHeader,
+  .variantNotes {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionTitleRow {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
@@ -194,6 +242,140 @@ a:hover {
   background: rgba(124, 92, 255, 0.14);
 }
 
+.comparisonHeader {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.runBadge {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.runBadge span,
+.setupItem span,
+.variantNotes span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.runBadge strong {
+  color: rgba(232, 236, 255, 0.94);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.runBadge--positive {
+  border-color: rgba(124, 92, 255, 0.32);
+  background: rgba(124, 92, 255, 0.12);
+}
+
+.runBadge--traditional {
+  border-color: rgba(45, 212, 191, 0.32);
+  background: rgba(45, 212, 191, 0.10);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: rgba(232, 236, 255, 0.92);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.statusPill--ok {
+  border-color: rgba(45, 212, 191, 0.38);
+  background: rgba(45, 212, 191, 0.11);
+}
+
+.statusPill--warn {
+  border-color: rgba(250, 218, 72, 0.42);
+  background: rgba(250, 218, 72, 0.11);
+}
+
+.setupGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.setupItem {
+  display: grid;
+  gap: 6px;
+  min-height: 82px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.setupItem strong {
+  color: rgba(232, 236, 255, 0.95);
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+.setupItem em {
+  color: rgb(250, 218, 72);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.variantNotes {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.variantNotes div {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.variantNotes strong {
+  color: rgba(232, 236, 255, 0.9);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.seriesLabel {
+  display: inline-flex;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: rgba(232, 236, 255, 0.92);
+  font-size: 13px;
+}
+
+.seriesLabel--positive {
+  border-color: rgba(124, 92, 255, 0.35);
+  background: rgba(124, 92, 255, 0.14);
+}
+
+.seriesLabel--traditional {
+  border-color: rgba(45, 212, 191, 0.35);
+  background: rgba(45, 212, 191, 0.10);
+}
+
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
@@ -211,6 +393,133 @@ pre {
   border-radius: 12px;
   border: 1px dashed rgba(255, 255, 255, 0.14);
   background: rgba(0, 0, 0, 0.12);
+}
+
+.qHeatmap {
+  display: grid;
+  gap: 12px;
+}
+
+.qHeatmapControls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.qHeatmapControls input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent2);
+}
+
+.iconButton {
+  appearance: none;
+  border: 1px solid rgba(45, 212, 191, 0.32);
+  background: rgba(45, 212, 191, 0.12);
+  color: rgba(232, 236, 255, 0.94);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  border-color: rgba(45, 212, 191, 0.58);
+  background: rgba(45, 212, 191, 0.18);
+}
+
+.qHeatmapCanvasWrap {
+  overflow: hidden;
+}
+
+.qHeatmapCanvasWrap canvas {
+  display: block;
+  max-width: 100%;
+}
+
+.qHeatmapLegend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-height: 34px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: rgba(232, 236, 255, 0.92);
+  font-size: 13px;
+}
+
+.qHeatmapLegend span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.qHeatmapLegend span:nth-child(1) {
+  background: linear-gradient(90deg, rgb(238, 85, 126), rgb(37, 47, 79));
+}
+
+.qHeatmapLegend span:nth-child(2) {
+  background: rgb(37, 47, 79);
+}
+
+.qHeatmapLegend span:nth-child(3) {
+  background: linear-gradient(90deg, rgb(37, 47, 79), rgb(45, 212, 191), rgb(250, 218, 72));
+}
+
+.qHeatmapLegend--stressOnly {
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+}
+
+.qHeatmapLegend--stressOnly span:nth-child(1) {
+  background: linear-gradient(90deg, rgb(238, 85, 126), rgb(37, 47, 79));
+}
+
+.qHeatmapLegend--stressOnly span:nth-child(2) {
+  background: rgb(37, 47, 79);
+}
+
+.qHeatmapStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.qHeatmapStats span {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.episodeBadge {
+  display: grid;
+  gap: 2px;
+  min-width: 76px;
+  border: 1px solid rgba(124, 92, 255, 0.42);
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: rgba(124, 92, 255, 0.14);
+  color: rgba(232, 236, 255, 0.94);
+  text-align: center;
+}
+
+.episodeBadge span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.episodeBadge strong {
+  font-size: 18px;
+  line-height: 1;
 }
 
 .prose h1,
@@ -242,4 +551,3 @@ pre {
   color: rgba(232, 236, 255, 0.86);
   line-height: 1.6;
 }
-
