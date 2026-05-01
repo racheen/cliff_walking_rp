@@ -1,7 +1,6 @@
 from enum import Enum
 import gymnasium as gym
 from gymnasium import spaces
-import pygame
 import numpy as np
 
 class Actions(Enum):
@@ -94,6 +93,14 @@ class CliffWalkerPositive(gym.Env):
             return self._render_frame()
 
     def _render_frame(self):
+        try:
+            import pygame  # type: ignore
+        except Exception as e:  # pragma: no cover
+            raise RuntimeError(
+                "pygame is required for render_mode='human' or 'rgb_array'. "
+                "Install pygame and ensure a display is available."
+            ) from e
+
         if self.window is None and self.render_mode == "human":
             pygame.init()
             pygame.display.init()
@@ -126,5 +133,6 @@ class CliffWalkerPositive(gym.Env):
 
     def close(self):
         if self.window is not None:
+            import pygame  # type: ignore
             pygame.display.quit()
             pygame.quit()
