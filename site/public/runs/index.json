@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1",
+  "generatedAt": "2026-05-01T14:36:00.000Z",
+  "runs": [
+    {
+      "runId": "2026-05-01T143528Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T143528Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T143536Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T143536Z_seed123/summary.json"
+    }
+  ]
+}
+

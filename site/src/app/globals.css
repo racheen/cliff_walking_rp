@@ -1,0 +1,245 @@
+:root {
+  color-scheme: light;
+  --bg: #0b1020;
+  --panel: #111a33;
+  --text: #e8ecff;
+  --muted: #a9b4e5;
+  --link: #7aa7ff;
+  --accent: #7c5cff;
+  --accent2: #2dd4bf;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 600px at 30% 0%, #182553, var(--bg)),
+    radial-gradient(900px 500px at 80% 10%, rgba(124, 92, 255, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 70% 80%, rgba(45, 212, 191, 0.14), transparent 60%);
+  color: var(--text);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(17, 26, 51, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.headerInner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+}
+
+.nav a {
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+}
+
+.main {
+  padding: 34px 24px 44px;
+}
+
+.footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.footerInner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.card {
+  background: rgba(17, 26, 51, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.card--hover {
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.card--hover:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(17, 26, 51, 0.92);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.cardTitle {
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+
+.cardSubtitle {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.grid2 {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 880px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.small {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.kpi {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.pill--accent {
+  color: rgba(232, 236, 255, 0.92);
+  border-color: rgba(124, 92, 255, 0.35);
+  background: rgba(124, 92, 255, 0.14);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.95em;
+}
+
+pre {
+  margin: 0;
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 14px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  letter-spacing: -0.02em;
+}
+
+.prose h1 {
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 0 0 10px;
+}
+
+.prose h2 {
+  font-size: 22px;
+  margin: 22px 0 10px;
+}
+
+.prose p {
+  color: rgba(232, 236, 255, 0.86);
+  line-height: 1.65;
+  margin: 10px 0;
+}
+
+.prose ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: rgba(232, 236, 255, 0.86);
+  line-height: 1.6;
+}
+

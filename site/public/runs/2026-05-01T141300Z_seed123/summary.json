@@ -1,0 +1,34 @@
+{
+  "schema_version": "1",
+  "variant": "positive_only",
+  "run_id": "2026-05-01T141300Z_seed123",
+  "xsize": 12,
+  "ysize": 4,
+  "hyperparameters": {
+    "variant": "positive_only",
+    "episodes": 1,
+    "gamma": 0.1,
+    "epsilon": 0.08,
+    "epsilon_decay": 0.01,
+    "alpha": 1.0,
+    "seed": 123,
+    "render": "none",
+    "render_sleep": 0.0,
+    "out_dir": "outputs_test",
+    "run_id": "2026-05-01T141300Z_seed123"
+  },
+  "metrics": {
+    "episode_returns": [
+      21.0
+    ],
+    "steps_per_episode": [
+      66
+    ],
+    "trajectories_path": "trajectories.json"
+  },
+  "media": {
+    "returns_png": "plots/returns.png",
+    "steps_png": "plots/steps.png",
+    "maxq_heatmaps_gif": "media/maxq_heatmaps.gif"
+  }
+}
