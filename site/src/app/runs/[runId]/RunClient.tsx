@@ -4,12 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { MetricChart } from "@/components/MetricCharts";
-import type { RunIndex, RunIndexEntry, RunSummary } from "@/lib/runs";
+import { QWedgeHeatmap } from "@/components/QWedgeHeatmap";
+import type { QValuesSnapshots, RunIndex, RunIndexEntry, RunSummary } from "@/lib/runs";
 import { fetchRunIndex, fetchSummary } from "@/lib/runs";
 
 export function RunClient({ runId }: { runId: string }) {
   const [entry, setEntry] = useState<RunIndexEntry | null>(null);
   const [summary, setSummary] = useState<RunSummary | null>(null);
+  const [qvalues, setQvalues] = useState<QValuesSnapshots | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const media = useMemo(() => summary?.media ?? {}, [summary]);
@@ -23,9 +25,21 @@ export function RunClient({ runId }: { runId: string }) {
         const e = v.runs.find((r) => r.runId === runId) ?? null;
         setEntry(e);
         if (!e) return;
-        return fetchSummary(e.summaryPath).then((s) => {
+        return fetchSummary(e.summaryPath).then(async (s) => {
           if (!alive) return;
           setSummary(s);
+          const qpath = s.media?.qvalues_snapshots_json;
+          if (qpath) {
+            try {
+              const res = await fetch(`/runs/${e.runId}/${qpath}`, { cache: "no-store" });
+              if (!res.ok) return;
+              const q = (await res.json()) as QValuesSnapshots;
+              if (!alive) return;
+              setQvalues(q);
+            } catch {
+              // Optional artifact; ignore if missing
+            }
+          }
         });
       })
       .catch((e: unknown) => {
@@ -76,7 +90,7 @@ export function RunClient({ runId }: { runId: string }) {
   }
 
   return (
-    <div className="grid">
+    <div style={{ display: "grid", gap: 18 }}>
       <section className="card">
         <div className="prose">
           <h1>{runId}</h1>
@@ -118,17 +132,13 @@ export function RunClient({ runId }: { runId: string }) {
 
       <section className="card">
         <div className="prose">
-          <h2>Heatmap animation</h2>
+          <h2>Q-value landscape</h2>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          alt="maxq heatmaps"
-          src={`/runs/${entry.runId}/${media.maxq_heatmaps_gif}`}
-          style={{ width: "100%", maxWidth: 900 }}
-        />
-        <p className="small">
-          This is the per-episode heatmap of max Q-values (static GIF generated during export).
-        </p>
+        {qvalues ? (
+          <QWedgeHeatmap data={qvalues} />
+        ) : (
+          <div className="empty">No per-action Q-value JSON found for this run yet.</div>
+        )}
       </section>
 
       <section className="card">
@@ -142,4 +152,3 @@ export function RunClient({ runId }: { runId: string }) {
     </div>
   );
 }
-

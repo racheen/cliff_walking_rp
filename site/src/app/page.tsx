@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { ReflectionClient } from "./reflection/ReflectionClient";
 
 export default function HomePage() {
-  redirect("/compare");
+  return <ReflectionClient />;
 }

@@ -16,8 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="headerInner">
               <div className="title">Cliff Walking (R+)</div>
               <nav className="nav">
-                <Link href="/compare">Compare</Link>
-                <Link href="/reflection">Reflection</Link>
+                <Link href="/">Home</Link>
+                <Link href="/environments">Training environments</Link>
               </nav>
             </div>
           </header>

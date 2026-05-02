@@ -306,6 +306,17 @@ a:hover {
   background: rgba(250, 218, 72, 0.11);
 }
 
+.selectControl {
+  min-inline-size: min(100%, 320px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.18);
+  color: rgba(232, 236, 255, 0.94);
+  font: inherit;
+  font-size: 13px;
+}
+
 .setupGrid {
   display: grid;
   gap: 10px;
@@ -495,6 +506,69 @@ pre {
   border-radius: 8px;
   padding: 6px 8px;
   background: rgba(0, 0, 0, 0.12);
+}
+
+.reflectionStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.reflectionStats span {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 9px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.layoutGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  margin-top: 16px;
+}
+
+.layoutPreview {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.miniGrid {
+  display: grid;
+  gap: 3px;
+  inline-size: 100%;
+  min-block-size: 104px;
+}
+
+.miniCell {
+  display: block;
+  aspect-ratio: 1 / 1;
+  min-inline-size: 0;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 3px;
+  background: rgba(232, 236, 255, 0.09);
+}
+
+.miniCell--start {
+  border-color: rgba(45, 212, 191, 0.55);
+  background: rgba(45, 212, 191, 0.40);
+}
+
+.miniCell--goal {
+  border-color: rgba(250, 218, 72, 0.62);
+  background: rgba(250, 218, 72, 0.48);
+}
+
+.miniCell--cliff {
+  border-color: rgba(238, 85, 126, 0.54);
+  background: rgba(238, 85, 126, 0.45);
 }
 
 .episodeBadge {
