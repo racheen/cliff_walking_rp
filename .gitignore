@@ -181,6 +181,11 @@ pyrightconfig.json
 # RL outputs / artifacts
 outputs/
 outputs_test/
+agent_positions_per_episode*.json
+q_table_only.json
+q_table_snapshots*.npy
+qtable.npy
+qtable_heatmaps*.json
 
 # Frontend build artifacts
 site/node_modules/
