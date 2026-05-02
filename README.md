@@ -1,4 +1,4 @@
-# Trap Grid Walking with Positive-Only Reinforcement
+# Cliff Walking Walking with Positive-Only Reinforcement
 
 This project explores whether a reinforcement learning agent can learn a safe path without punishment. It began with the classic Cliff Walking problem and now uses configurable grid worlds where traps can appear in different layouts across the board.
 
@@ -53,13 +53,50 @@ S . . . . . . . . . . G
 
 ```text
 .
-├── src/cliff_walking_rp/      # Packaged CLI, training code, and artifact export
-├── gymnasium_env/             # Custom Gymnasium environments and layouts
-├── site/                      # Static Next.js viewer
-├── documents/                 # Reflection PDF
-├── qlearning*.py              # Earlier exploratory scripts
-├── visualize.py               # Legacy visualization helper
-└── pyproject.toml             # Python package metadata
+├── README.md
+├── LICENSE
+├── pyproject.toml                 # Python package metadata and CLI entry point
+├── .pre-commit-config.yaml
+├── documents/
+│   └── reflection.pdf             # Extended project reflection
+├── gymnasium_env/                 # Custom Gymnasium environment package
+│   ├── envs/
+│   │   ├── layouts.py             # Trap/cliff layout definitions
+│   │   ├── positive_only.py       # Positive-only environment
+│   │   └── usual_approach.py      # Traditional penalty environment
+│   └── wrappers/
+│       ├── clip_reward.py
+│       ├── discrete_actions.py
+│       └── relative_position.py
+├── src/
+│   └── cliff_walking_rp/          # Packaged trainer and artifact exporter
+│       ├── __main__.py
+│       ├── cli.py                 # `python -m cliff_walking_rp` commands
+│       ├── artifacts/
+│       │   ├── export.py
+│       │   └── schema.py
+│       └── training/
+│           ├── common.py
+│           ├── positive_only.py
+│           ├── traditional.py
+│           └── types.py
+├── site/                          # Static Next.js viewer
+│   ├── public/
+│   │   ├── reflection.pdf
+│   │   └── runs/                  # Site-ready exported run bundles
+│   ├── src/
+│   │   ├── app/                   # App Router pages
+│   │   ├── components/            # Charts and Q-value heatmaps
+│   │   └── lib/                   # Viewer data helpers
+│   ├── package.json
+│   ├── package-lock.json
+│   └── next.config.ts
+├── qlearning.ipynb                # Earlier exploratory notebook
+├── qlearning.py                   # Earlier standalone trainer
+├── qlearning2.py                  # Earlier standalone trainer
+├── save_snapshot.py               # Legacy snapshot helper
+├── visualize.py                   # Legacy visualization helper
+└── null_agent.py                  # Minimal agent experiment
 ```
 
 Generated training outputs belong in `outputs/` or `site/public/runs/`. Local caches, build output, and ad hoc top-level Q-table files are ignored.
