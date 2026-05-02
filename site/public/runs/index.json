@@ -1,17 +1,76 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-05-01T14:36:00.000Z",
+  "generatedAt": "2026-05-01T23:55:46.083671Z",
   "runs": [
     {
-      "runId": "2026-05-01T143528Z_seed123",
+      "runId": "2026-05-01T233302Z_seed123",
       "variant": "positive_only",
-      "summaryPath": "2026-05-01T143528Z_seed123/summary.json"
+      "summaryPath": "2026-05-01T233302Z_seed123/summary.json"
     },
     {
-      "runId": "2026-05-01T143536Z_seed123",
+      "runId": "2026-05-01T233311Z_seed123",
       "variant": "traditional",
-      "summaryPath": "2026-05-01T143536Z_seed123/summary.json"
+      "summaryPath": "2026-05-01T233311Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T235323Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T235323Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T235329Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T235329Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T234359Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T234359Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T234408Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T234408Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T233737Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T233737Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T233744Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T233744Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T233621Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T233621Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T233629Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T233629Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T233558Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T233558Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T233607Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T233607Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T235527Z_seed123",
+      "variant": "positive_only",
+      "summaryPath": "2026-05-01T235527Z_seed123/summary.json"
+    },
+    {
+      "runId": "2026-05-01T235536Z_seed123",
+      "variant": "traditional",
+      "summaryPath": "2026-05-01T235536Z_seed123/summary.json"
     }
   ]
 }
-
