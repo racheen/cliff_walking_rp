@@ -69,13 +69,77 @@ def _save_heatmap_gif(path: Path, heatmaps: np.ndarray) -> None:
 
     def update(i: int):
         im.set_data(heatmaps[i])
-        ax.set_xlabel(f"Episode {i + 1}/{heatmaps.shape[0]}")
+        ax.set_xlabel(f"Episode {i}/{heatmaps.shape[0] - 1}")
         return (im,)
 
     ani = animation.FuncAnimation(fig, update, frames=heatmaps.shape[0], interval=120, blit=True)
     writer = animation.PillowWriter(fps=8)
     ani.save(path, writer=writer)
     plt.close(fig)
+
+def _qvalues_frames(
+    qtable_snapshots: np.ndarray, xsize: int, ysize: int, *, max_frames: int = 220
+) -> tuple[list[int], np.ndarray]:
+    """
+    Convert snapshots (episode 0 baseline + episodes, states, actions) to (frames, y, x, actions),
+    downsampling episodes to keep the JSON payload reasonable.
+    """
+    if qtable_snapshots.size == 0:
+        return ([], np.zeros((0, ysize, xsize, 4), dtype=np.float32))
+
+    total_frames = int(qtable_snapshots.shape[0])
+    stride = max(1, int(np.ceil(total_frames / max_frames)))
+    frame_eps = list(range(0, total_frames, stride))
+
+    frames = []
+    for ep_idx in range(0, total_frames, stride):
+        qt = qtable_snapshots[ep_idx]  # (states, actions)
+        grid = np.zeros((ysize, xsize, int(qt.shape[1])), dtype=np.float32)
+        for y in range(ysize):
+            for x in range(xsize):
+                s = x + y * xsize
+                grid[y, x, :] = qt[s, :]
+        frames.append(grid)
+
+    return (frame_eps, np.stack(frames, axis=0))
+
+
+def _write_qvalues_json(path: Path, qtable_snapshots: np.ndarray, xsize: int, ysize: int) -> None:
+    """
+    Writes a compact JSON bundle used by the website to render a 4-wedge per-cell heatmap.
+    """
+    frame_eps, frames = _qvalues_frames(qtable_snapshots, xsize, ysize)
+    if frames.shape[0] == 0:
+        payload = {
+            "schema_version": "1",
+            "xsize": xsize,
+            "ysize": ysize,
+            "actions": ["right", "up", "left", "down"],
+            "frame_episodes": [],
+            "min": 0.0,
+            "max": 0.0,
+            "qvalues": [],
+        }
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return
+
+    vmin = float(np.min(frames))
+    vmax = float(np.max(frames))
+
+    # Round values to keep file smaller without affecting visuals too much.
+    rounded = np.round(frames.astype(np.float32), 4)
+
+    payload = {
+        "schema_version": "1",
+        "xsize": xsize,
+        "ysize": ysize,
+        "actions": ["right", "up", "left", "down"],
+        "frame_episodes": frame_eps,  # 1-indexed episode numbers
+        "min": vmin,
+        "max": vmax,
+        "qvalues": rounded.tolist(),  # [frame][y][x][a]
+    }
+    path.write_text(json.dumps(payload), encoding="utf-8")
 
 
 def export_run_bundle(
@@ -95,6 +159,7 @@ def export_run_bundle(
     returns_png = plots_dir / "returns.png"
     steps_png = plots_dir / "steps.png"
     heatmaps_gif = media_dir / "maxq_heatmaps.gif"
+    qvalues_json = media_dir / "qvalues_snapshots.json"
 
     _plot_series(
         returns_png,
@@ -113,6 +178,7 @@ def export_run_bundle(
 
     heatmaps = _maxq_heatmaps(result.qtable_snapshots, result.xsize, result.ysize)
     _save_heatmap_gif(heatmaps_gif, heatmaps)
+    _write_qvalues_json(qvalues_json, result.qtable_snapshots, result.xsize, result.ysize)
 
     # Keep trajectories as a separate file to keep summary.json small-ish.
     trajectories_path = run_dir / "trajectories.json"
@@ -124,6 +190,7 @@ def export_run_bundle(
         run_id=run_id,
         xsize=result.xsize,
         ysize=result.ysize,
+        cliff_positions=result.cliff_positions,
         hyperparameters=cfg,
         metrics={
             "episode_returns": result.episode_returns,
@@ -134,6 +201,7 @@ def export_run_bundle(
             returns_png=str(returns_png.relative_to(run_dir)).replace("\\", "/"),
             steps_png=str(steps_png.relative_to(run_dir)).replace("\\", "/"),
             maxq_heatmaps_gif=str(heatmaps_gif.relative_to(run_dir)).replace("\\", "/"),
+            qvalues_snapshots_json=str(qvalues_json.relative_to(run_dir)).replace("\\", "/"),
         ),
     )
 
@@ -147,4 +215,3 @@ def export_run_bundle(
     np.save(run_dir / "qtable_snapshots.npy", result.qtable_snapshots)
 
     return run_dir
-

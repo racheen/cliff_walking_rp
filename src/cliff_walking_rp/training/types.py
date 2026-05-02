@@ -16,4 +16,6 @@ class TrainConfig:
     render: str = "none"  # "none" | "human"
     render_sleep: float = 0.0
     out_dir: Path = Path("outputs")
-
+    width: int = 12
+    height: int = 4
+    cliff_layout: str = "scattered"

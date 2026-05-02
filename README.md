@@ -1,11 +1,11 @@
-# Cliff Walking with Positive-Only Reinforcement
+# Trap Grid Walking with Positive-Only Reinforcement
 
 ## Overview
-This project explores whether a reinforcement learning agent can learn an optimal policy without punishment, using positive-only reinforcement instead of traditional penalties.
+This project explores whether a reinforcement learning agent can learn a safe path without punishment, using positive-only reinforcement instead of traditional penalties.
 
-Using the classic Cliff Walking environment, I compare two agents:
+The project began with the classic Cliff Walking environment, then expanded into configurable grid worlds with traps/mines that can appear anywhere on the board. I compare two agents:
 
-- A **traditional Q-learning agent** trained with step penalties and a harsh cliff penalty
+- A **traditional Q-learning agent** trained with step penalties and a harsh trap penalty
 
 - A **positive-only agent** trained by rewarding progress toward the goal, with no negative rewards
 
@@ -18,27 +18,53 @@ The results show that an agent can successfully learn safe and effective behavio
 
 ## Core Concepts
 - Algorithm: Q-learning (from scratch)
-- Environment: Custom Gymnasium Cliff Walking implementation
+- Environment: Custom Gymnasium grid-world implementation
 - Reward Strategy:
-    - Traditional: step penalty + cliff penalty
+    - Traditional: step penalty + trap penalty
     - Positive-only: reward for moving closer to the goal, no punishment for mistakes
 - Comparison: Learning dynamics, convergence, and learned policies
 
 ## Environment Summary
-- Grid Size: 12 × 4
+- Grid Size: configurable with `--width` and `--height`
 - Start: Bottom-left
 - Goal: Bottom-right
-- Cliff: Bottom row between start and goal
+- Traps/mines: configurable with `--trap-layout`
 - Actions: Up, Down, Left, Right
 
-In the traditional setup, stepping into the cliff produces a large negative reward.
+In the traditional setup, stepping into a trap produces a large negative reward.
 
 In the positive-only setup, the agent is simply reset—no penalty applied.
+
+The CLI prints an ASCII preview before training:
+
+```text
+Grid preview: 12 x 6, trap layout: scattered
+Legend: S=start, G=goal, X=trap/mine, .=open
+. . . . . . . . . . . .
+. . . . . . . . . . . .
+. . . . X . . . X . . .
+. . . . . . X . . . . .
+. . . X . . . . . X . .
+S . . . . . . . . . . G
+```
+
+Supported trap layouts:
+
+| Layout | Idea |
+|--------|------|
+| `scattered` | Individual traps placed around the board |
+| `maze` | Trap walls with openings, forcing navigation around hazards |
+| `islands` | Clusters of traps in the interior |
+| `mixed` | Classic bottom cliff plus scattered traps, barriers, and islands |
+| `bottom` | Classic bottom-row Cliff Walking layout |
+| `gap` | Bottom-row cliff with one safe opening |
+| `middle` | Horizontal trap row above the bottom |
+| `double` | Bottom cliff plus extra upper traps |
 
 ## Results at a Glance
 | Aspect          | Positive-Only     | Traditional |
 |-----------------|-------------------|-------------|
-| Cliff Penalty   | None              | -100        |
+| Trap Penalty    | None              | -100        |
 | Step Reward     | Progress-based    | -1          |
 | Exploration     | Higher            | Lower       |
 | Convergence     | Slower            | Faster      |
@@ -58,12 +84,7 @@ This experiment is inspired by reward shaping theory in reinforcement learning a
 
 Rather than teaching an agent what not to do, this approach focuses on reinforcing meaningful progress, mirroring how modern dog trainers teach behavior without fear or punishment.
 
-Full reflection and cross-disciplinary analysis
-A detailed discussion connecting reinforcement learning, operant conditioning, and humane dog training is available in:
-
-```bash
-documents/reflection.pdf
-```
+The web app now uses the full reflection as the home page and places the actual run graphs directly in the write-up.
 
 Repository Structure (High-Level)
 ```bash
@@ -108,6 +129,19 @@ Traditional:
 PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train --variant traditional --episodes 200 --seed 123 --out outputs
 ```
 
+Different trap grid:
+
+```bash
+PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train \
+  --variant positive_only \
+  --episodes 200 \
+  --width 12 \
+  --height 6 \
+  --trap-layout scattered \
+  --seed 123 \
+  --out outputs
+```
+
 Full CLI (all flags available):
 
 ```bash
@@ -120,6 +154,9 @@ PYTHONPATH=src python3 -m cliff_walking_rp train \
   --alpha 1.0 \
   --seed 123 \
   --render none \
+  --width 12 \
+  --height 6 \
+  --trap-layout scattered \
   --out outputs
 ```
 
@@ -133,6 +170,9 @@ PYTHONPATH=src python3 -m cliff_walking_rp train \
   --alpha 1.0 \
   --seed 123 \
   --render none \
+  --width 12 \
+  --height 6 \
+  --trap-layout scattered \
   --out outputs
 ```
 
@@ -144,10 +184,15 @@ outputs/<variant>/<runId>/
   plots/returns.png
   plots/steps.png
   media/maxq_heatmaps.gif
+  media/qvalues_snapshots.json
   trajectories.json
   qtable.npy
   qtable_snapshots.npy
 ```
+
+Notes:
+- `media/qvalues_snapshots.json` is the **per-action Q-value “mental state”** data used by the website to render a 4-wedge heatmap (up/right/down/left) with a time slider.
+- The PNGs/GIFs are still exported for quick previews and offline use.
 
 ### (Optional) Render during training
 Rendering is slower and requires `pygame` + a display.
@@ -163,29 +208,61 @@ The static viewer lives in `site/` (Next.js + TypeScript). It reads run bundles 
 site/public/runs/<runId>/
 ```
 
-### Add a run to the site (manual sync)
-1) Train and export:
+### Train both variants and sync the site
+Run one command from the repo root:
 
 ```bash
-PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train --variant positive_only --episodes 200 --seed 123 --out outputs
+PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train-site \
+  --episodes 200 \
+  --width 12 \
+  --height 6 \
+  --trap-layout scattered \
+  --seed 123
 ```
 
-2) Copy the run folder into the site:
+This trains both `positive_only` and `traditional`, copies each exported bundle into
+`site/public/runs/<runId>/`, and updates `site/public/runs/index.json` for the static
+viewer. The command also prints the grid preview before training starts.
+
+You can pass the same hyperparameters as `train`:
 
 ```bash
-mkdir -p site/public/runs/<runId>
-cp -R outputs/positive_only/<runId>/* site/public/runs/<runId>/
+PYTHONPATH=src MPLCONFIGDIR=.mplcache python3 -m cliff_walking_rp train-site \
+  --episodes 500 \
+  --gamma 0.1 \
+  --epsilon 0.08 \
+  --epsilon-decay 0.01 \
+  --alpha 1.0 \
+  --width 14 \
+  --height 7 \
+  --trap-layout mixed \
+  --seed 123 \
+  --out outputs \
+  --site-runs site/public/runs
 ```
 
-3) Update `site/public/runs/index.json` with an entry:
+If both variants finish with the same timestamped `runId`, the site copy gets a
+variant suffix such as `_traditional` so the static folders do not collide.
 
-```json
-{
-  "runId": "<runId>",
-  "variant": "positive_only",
-  "summaryPath": "<runId>/summary.json"
-}
+Open the run in the site:
+- Reflection home page: `/`
+- Training environments browser: `/environments`
+
+Old routes are kept as redirects:
+- `/reflection` redirects to `/`
+- `/compare` and `/runs` redirect to `/environments`
+
+### Run the site locally (dev)
+From `site/`:
+
+```bash
+npm install
+npm run dev
 ```
+
+Then open `http://127.0.0.1:3000`.
+
+If you see `EADDRINUSE`, something is already using port 3000. Stop the other process or run Next on a different port.
 
 ### Build the site (static export)
 From `site/`:

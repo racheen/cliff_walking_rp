@@ -3,6 +3,8 @@ import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
 
+from gymnasium_env.envs.layouts import cliff_positions_for_layout
+
 class Actions(Enum):
     right = 0
     up = 1
@@ -12,8 +14,9 @@ class Actions(Enum):
 class CliffWalkerPositive(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
 
-    def __init__(self, render_mode=None, size=(12, 4)):
+    def __init__(self, render_mode=None, size=(12, 4), cliff_layout="bottom"):
         self.xsize, self.ysize = size
+        self.cliff_layout = cliff_layout
         self.window_xsize = 3 * 256
         self.window_ysize = 256
 
@@ -24,14 +27,14 @@ class CliffWalkerPositive(gym.Env):
             }
         )
 
-        self.cliff_positions = {(i, self.ysize - 1) for i in range(1, self.xsize - 1)}
+        self.cliff_positions = cliff_positions_for_layout(self.xsize, self.ysize, cliff_layout)
         self.action_space = spaces.Discrete(4)
 
         self._action_to_direction = {
             Actions.right.value: np.array([1, 0]),
-            Actions.up.value: np.array([0, 1]),
+            Actions.up.value: np.array([0, -1]),
             Actions.left.value: np.array([-1, 0]),
-            Actions.down.value: np.array([0, -1]),
+            Actions.down.value: np.array([0, 1]),
         }
 
         self.render_mode = render_mode

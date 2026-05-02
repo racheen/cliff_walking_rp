@@ -16,6 +16,7 @@ class TrainResult:
     agent_positions_per_episode: list[list[list[int]]]
     xsize: int
     ysize: int
+    cliff_positions: list[list[int]]
 
 
 def state_to_index(agent_xy: Any, xsize: int) -> int:
@@ -47,6 +48,7 @@ def q_learning_train(
     obs, _info = env.reset(seed=seed)
     xsize = int(env.observation_space["agent"].high[0]) + 1
     ysize = int(env.observation_space["agent"].high[1]) + 1
+    cliff_positions = sorted([[int(x), int(y)] for x, y in getattr(env.unwrapped, "cliff_positions", [])])
     num_states = xsize * ysize
     num_actions = int(env.action_space.n)
 
@@ -55,7 +57,7 @@ def q_learning_train(
     episode_returns: list[float] = []
     steps_per_episode: list[int] = []
     agent_positions_per_episode: list[list[list[int]]] = []
-    snapshots: list[np.ndarray] = []
+    snapshots: list[np.ndarray] = [qtable.copy()]
 
     for _ep in range(episodes):
         positions_this_episode: list[list[int]] = []
@@ -112,5 +114,5 @@ def q_learning_train(
         agent_positions_per_episode=agent_positions_per_episode,
         xsize=xsize,
         ysize=ysize,
+        cliff_positions=cliff_positions,
     )
-

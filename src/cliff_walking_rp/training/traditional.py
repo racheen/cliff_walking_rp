@@ -17,7 +17,12 @@ def train_traditional(cfg: TrainConfig) -> Path:
     run_dir = cfg.out_dir / "traditional" / run_id
 
     render_mode = "human" if cfg.render == "human" else None
-    env = gymnasium.make("gymnasium_env/CliffWalker", render_mode=render_mode)
+    env = gymnasium.make(
+        "gymnasium_env/CliffWalker",
+        render_mode=render_mode,
+        size=(cfg.width, cfg.height),
+        cliff_layout=cfg.cliff_layout,
+    )
 
     result = q_learning_train(
         env=env,
@@ -42,4 +47,3 @@ def train_traditional(cfg: TrainConfig) -> Path:
         cfg=cfg_dict | {"run_id": run_id},
         result=result,
     )
-
