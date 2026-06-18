@@ -1,13 +1,24 @@
 :root {
   color-scheme: light;
-  --bg: #0b1020;
-  --panel: #111a33;
-  --text: #e8ecff;
-  --muted: #a9b4e5;
-  --link: #7aa7ff;
-  --accent: #7c5cff;
-  --accent2: #2dd4bf;
-  --border: rgba(255, 255, 255, 0.12);
+  --bg: #f4faf5;
+  --panel: #edf7ef;
+  --surface: #ffffff;
+  --surface-strong: #e4f4e8;
+  --text: #1d3526;
+  --muted: #577162;
+  --link: #2f7d57;
+  --accent: #4f9d74;
+  --accent2: #7ac49c;
+  --accent3: #c8e6cf;
+  --neutral: #6b8aba;
+  --stress: #e35866;
+  --reward: #1f8451;
+  --border: rgba(67, 109, 82, 0.16);
+  --shadow: 0 18px 50px rgba(35, 72, 49, 0.08);
+  --chart-grid: rgba(67, 109, 82, 0.1);
+  --chart-axis: rgba(29, 53, 38, 0.58);
+  --chart-tooltip-bg: rgba(255, 255, 255, 0.97);
+  --chart-tooltip-border: rgba(67, 109, 82, 0.18);
 }
 
 * {
@@ -23,9 +34,9 @@ body {
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
     "Apple Color Emoji", "Segoe UI Emoji";
-  background: radial-gradient(1200px 600px at 30% 0%, #182553, var(--bg)),
-    radial-gradient(900px 500px at 80% 10%, rgba(124, 92, 255, 0.18), transparent 60%),
-    radial-gradient(900px 500px at 70% 80%, rgba(45, 212, 191, 0.14), transparent 60%);
+  background: radial-gradient(1200px 600px at 20% 0%, rgba(122, 196, 156, 0.28), transparent 58%),
+    radial-gradient(900px 500px at 85% 10%, rgba(200, 230, 207, 0.7), transparent 55%),
+    linear-gradient(180deg, #fbfdfb 0%, var(--bg) 100%);
   color: var(--text);
 }
 
@@ -49,8 +60,9 @@ a:hover {
   justify-content: space-between;
   padding: 20px 24px;
   border-bottom: 1px solid var(--border);
-  background: rgba(17, 26, 51, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(244, 250, 245, 0.86);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
 }
 
 .headerInner {
@@ -79,7 +91,7 @@ a:hover {
 }
 
 .nav a:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(79, 157, 116, 0.1);
   text-decoration: none;
 }
 
@@ -109,10 +121,11 @@ a:hover {
 }
 
 .card {
-  background: rgba(17, 26, 51, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
+  box-shadow: var(--shadow);
 }
 
 .card--hover {
@@ -121,8 +134,8 @@ a:hover {
 
 .card--hover:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(17, 26, 51, 0.92);
+  border-color: rgba(79, 157, 116, 0.24);
+  background: rgba(255, 255, 255, 0.98);
 }
 
 .cardHeader {
@@ -164,7 +177,7 @@ a:hover {
 .setupBand {
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: rgba(17, 26, 51, 0.78);
+  background: rgba(255, 255, 255, 0.82);
 }
 
 .section + .section {
@@ -185,7 +198,7 @@ a:hover {
 
 .divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(67, 109, 82, 0.12);
   margin: 16px 0;
 }
 
@@ -231,15 +244,15 @@ a:hover {
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(79, 157, 116, 0.08);
   font-size: 13px;
   color: var(--muted);
 }
 
 .pill--accent {
-  color: rgba(232, 236, 255, 0.92);
-  border-color: rgba(124, 92, 255, 0.35);
-  background: rgba(124, 92, 255, 0.14);
+  color: var(--text);
+  border-color: rgba(79, 157, 116, 0.28);
+  background: rgba(122, 196, 156, 0.18);
 }
 
 .comparisonHeader {
@@ -256,7 +269,7 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .runBadge span,
@@ -270,19 +283,19 @@ a:hover {
 }
 
 .runBadge strong {
-  color: rgba(232, 236, 255, 0.94);
+  color: var(--text);
   font-size: 14px;
   overflow-wrap: anywhere;
 }
 
 .runBadge--positive {
-  border-color: rgba(124, 92, 255, 0.32);
-  background: rgba(124, 92, 255, 0.12);
+  border-color: rgba(79, 157, 116, 0.3);
+  background: rgba(122, 196, 156, 0.14);
 }
 
 .runBadge--traditional {
-  border-color: rgba(45, 212, 191, 0.32);
-  background: rgba(45, 212, 191, 0.10);
+  border-color: rgba(87, 113, 98, 0.2);
+  background: rgba(230, 239, 232, 0.92);
 }
 
 .statusPill {
@@ -291,19 +304,19 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 6px 10px;
-  color: rgba(232, 236, 255, 0.92);
+  color: var(--text);
   font-size: 13px;
   white-space: nowrap;
 }
 
 .statusPill--ok {
-  border-color: rgba(45, 212, 191, 0.38);
-  background: rgba(45, 212, 191, 0.11);
+  border-color: rgba(79, 157, 116, 0.34);
+  background: rgba(122, 196, 156, 0.12);
 }
 
 .statusPill--warn {
-  border-color: rgba(250, 218, 72, 0.42);
-  background: rgba(250, 218, 72, 0.11);
+  border-color: rgba(181, 139, 44, 0.28);
+  background: rgba(248, 239, 213, 0.95);
 }
 
 .selectControl {
@@ -311,8 +324,8 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 10px;
-  background: rgba(0, 0, 0, 0.18);
-  color: rgba(232, 236, 255, 0.94);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text);
   font: inherit;
   font-size: 13px;
 }
@@ -327,20 +340,20 @@ a:hover {
   display: grid;
   gap: 6px;
   min-height: 82px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(67, 109, 82, 0.12);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.13);
+  background: rgba(255, 255, 255, 0.84);
 }
 
 .setupItem strong {
-  color: rgba(232, 236, 255, 0.95);
+  color: var(--text);
   font-size: 18px;
   line-height: 1.15;
 }
 
 .setupItem em {
-  color: rgb(250, 218, 72);
+  color: var(--accent);
   font-size: 12px;
   font-style: normal;
 }
@@ -355,14 +368,14 @@ a:hover {
 .variantNotes div {
   display: grid;
   gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(67, 109, 82, 0.12);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.84);
 }
 
 .variantNotes strong {
-  color: rgba(232, 236, 255, 0.9);
+  color: var(--text);
   font-size: 14px;
   line-height: 1.4;
 }
@@ -373,18 +386,18 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 6px 10px;
-  color: rgba(232, 236, 255, 0.92);
+  color: var(--text);
   font-size: 13px;
 }
 
 .seriesLabel--positive {
-  border-color: rgba(124, 92, 255, 0.35);
-  background: rgba(124, 92, 255, 0.14);
+  border-color: rgba(79, 157, 116, 0.3);
+  background: rgba(122, 196, 156, 0.16);
 }
 
 .seriesLabel--traditional {
-  border-color: rgba(45, 212, 191, 0.35);
-  background: rgba(45, 212, 191, 0.10);
+  border-color: rgba(87, 113, 98, 0.22);
+  background: rgba(230, 239, 232, 0.92);
 }
 
 code {
@@ -402,8 +415,8 @@ pre {
   font-size: 14px;
   padding: 14px 12px;
   border-radius: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.14);
-  background: rgba(0, 0, 0, 0.12);
+  border: 1px dashed rgba(67, 109, 82, 0.18);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .qHeatmap {
@@ -425,9 +438,9 @@ pre {
 
 .iconButton {
   appearance: none;
-  border: 1px solid rgba(45, 212, 191, 0.32);
-  background: rgba(45, 212, 191, 0.12);
-  color: rgba(232, 236, 255, 0.94);
+  border: 1px solid rgba(79, 157, 116, 0.3);
+  background: rgba(122, 196, 156, 0.16);
+  color: var(--text);
   border-radius: 8px;
   padding: 8px 12px;
   font: inherit;
@@ -437,8 +450,8 @@ pre {
 }
 
 .iconButton:hover {
-  border-color: rgba(45, 212, 191, 0.58);
-  background: rgba(45, 212, 191, 0.18);
+  border-color: rgba(79, 157, 116, 0.48);
+  background: rgba(122, 196, 156, 0.24);
 }
 
 .qHeatmapCanvasWrap {
@@ -457,7 +470,7 @@ pre {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 8px;
-  color: rgba(232, 236, 255, 0.92);
+  color: var(--text);
   font-size: 13px;
 }
 
@@ -470,15 +483,15 @@ pre {
 }
 
 .qHeatmapLegend span:nth-child(1) {
-  background: linear-gradient(90deg, rgb(238, 85, 126), rgb(37, 47, 79));
+  background: linear-gradient(90deg, #ffd4db, #ea7d8b);
 }
 
 .qHeatmapLegend span:nth-child(2) {
-  background: rgb(37, 47, 79);
+  background: linear-gradient(90deg, #d8e4fb, #85a8e8);
 }
 
 .qHeatmapLegend span:nth-child(3) {
-  background: linear-gradient(90deg, rgb(37, 47, 79), rgb(45, 212, 191), rgb(250, 218, 72));
+  background: linear-gradient(90deg, #d6f0dd, #6cc88c, #1f8451);
 }
 
 .qHeatmapLegend--stressOnly {
@@ -486,11 +499,11 @@ pre {
 }
 
 .qHeatmapLegend--stressOnly span:nth-child(1) {
-  background: linear-gradient(90deg, rgb(238, 85, 126), rgb(37, 47, 79));
+  background: linear-gradient(90deg, #ffd4db, #ea7d8b);
 }
 
 .qHeatmapLegend--stressOnly span:nth-child(2) {
-  background: rgb(37, 47, 79);
+  background: linear-gradient(90deg, #d8e4fb, #85a8e8);
 }
 
 .qHeatmapStats {
@@ -505,7 +518,7 @@ pre {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 6px 8px;
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.82);
 }
 
 .reflectionStats {
@@ -521,7 +534,7 @@ pre {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 7px 9px;
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.82);
 }
 
 .layoutGrid {
@@ -534,10 +547,10 @@ pre {
 .layoutPreview {
   display: grid;
   gap: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(67, 109, 82, 0.12);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.84);
 }
 
 .miniGrid {
@@ -551,35 +564,35 @@ pre {
   display: block;
   aspect-ratio: 1 / 1;
   min-inline-size: 0;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(67, 109, 82, 0.12);
   border-radius: 3px;
-  background: rgba(232, 236, 255, 0.09);
+  background: rgba(220, 239, 224, 0.6);
 }
 
 .miniCell--start {
-  border-color: rgba(45, 212, 191, 0.55);
-  background: rgba(45, 212, 191, 0.40);
+  border-color: rgba(79, 157, 116, 0.52);
+  background: rgba(122, 196, 156, 0.45);
 }
 
 .miniCell--goal {
-  border-color: rgba(250, 218, 72, 0.62);
-  background: rgba(250, 218, 72, 0.48);
+  border-color: rgba(181, 139, 44, 0.5);
+  background: rgba(248, 239, 213, 0.96);
 }
 
 .miniCell--cliff {
-  border-color: rgba(238, 85, 126, 0.54);
-  background: rgba(238, 85, 126, 0.45);
+  border-color: rgba(124, 88, 57, 0.3);
+  background: rgba(240, 229, 218, 0.9);
 }
 
 .episodeBadge {
   display: grid;
   gap: 2px;
   min-width: 76px;
-  border: 1px solid rgba(124, 92, 255, 0.42);
+  border: 1px solid rgba(79, 157, 116, 0.28);
   border-radius: 8px;
   padding: 7px 10px;
-  background: rgba(124, 92, 255, 0.14);
-  color: rgba(232, 236, 255, 0.94);
+  background: rgba(122, 196, 156, 0.16);
+  color: var(--text);
   text-align: center;
 }
 
@@ -614,7 +627,7 @@ pre {
 }
 
 .prose p {
-  color: rgba(232, 236, 255, 0.86);
+  color: rgba(29, 53, 38, 0.88);
   line-height: 1.65;
   margin: 10px 0;
 }
@@ -622,6 +635,6 @@ pre {
 .prose ul {
   margin: 10px 0 0;
   padding-left: 18px;
-  color: rgba(232, 236, 255, 0.86);
+  color: rgba(29, 53, 38, 0.88);
   line-height: 1.6;
 }

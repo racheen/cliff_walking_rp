@@ -18,13 +18,13 @@ function mixColor(a: [number, number, number], b: [number, number, number], t: n
 
 function colorForValue(v: number, stressMin: number, rewardMax: number) {
   if (!Number.isFinite(v)) {
-    return "rgba(255,255,255,0.07)";
+    return "rgba(255, 255, 255, 0.77)";
   }
 
-  const neutral: [number, number, number] = [37, 47, 79];
-  const stress: [number, number, number] = [238, 85, 126];
-  const learned: [number, number, number] = [45, 212, 191];
-  const reward: [number, number, number] = [250, 218, 72];
+  const neutral: [number, number, number] = [70, 110, 179];
+  const stress: [number, number, number] = [230, 73, 94];
+  const learned: [number, number, number] = [69, 171, 103];
+  const reward: [number, number, number] = [28, 136, 76];
 
   if (v < 0 && stressMin < 0) {
     return mixColor(neutral, stress, Math.abs(v / stressMin));
@@ -173,8 +173,8 @@ export function QWedgeHeatmap({
         ctx.fill();
 
         // Cell outline
-        ctx.strokeStyle = "rgba(255,255,255,0.10)";
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(255,255,255,0.18)";
+        ctx.lineWidth = 1.2;
         ctx.strokeRect(x0 + 0.5, y0 + 0.5, cell - 1, cell - 1);
 
         // Cross lines
@@ -183,7 +183,7 @@ export function QWedgeHeatmap({
         ctx.lineTo(x0 + cell, y0 + cell);
         ctx.moveTo(x0 + cell, y0);
         ctx.lineTo(x0, y0 + cell);
-        ctx.strokeStyle = "rgba(0,0,0,0.20)";
+        ctx.strokeStyle = "rgba(18,35,58,0.3)";
         ctx.lineWidth = 1;
         ctx.stroke();
       }

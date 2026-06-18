@@ -52,36 +52,37 @@ export function MetricChart({
                   <stop offset="90%" stopColor="var(--accent)" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(255,255,255,0.08)" strokeDasharray="3 3" />
+              <CartesianGrid stroke="rgba(67,109,82,0.10)" strokeDasharray="3 3" />
               <XAxis
                 dataKey="x"
-                tick={{ fill: "rgba(232,236,255,0.75)", fontSize: 12 }}
+                tick={{ fill: "rgba(29,53,38,0.58)", fontSize: 12 }}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
-                tick={{ fill: "rgba(232,236,255,0.75)", fontSize: 12 }}
+                tick={{ fill: "rgba(29,53,38,0.58)", fontSize: 12 }}
                 tickLine={false}
                 axisLine={false}
                 width={36}
               />
               <Tooltip
                 contentStyle={{
-                  background: "rgba(10,14,28,0.92)",
-                  border: "1px solid rgba(255,255,255,0.14)",
+                  background: "rgba(255,255,255,0.97)",
+                  border: "1px solid rgba(67,109,82,0.18)",
                   borderRadius: 12,
-                  color: "var(--text)"
+                  color: "var(--text)",
+                  boxShadow: "0 18px 40px rgba(35,72,49,0.12)"
                 }}
-                labelStyle={{ color: "rgba(232,236,255,0.85)" }}
+                labelStyle={{ color: "rgba(29,53,38,0.78)" }}
               />
               <Area
                 type="monotone"
                 dataKey="y"
                 stroke="var(--accent)"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 fill="url(#fillAccent)"
                 dot={false}
-                activeDot={{ r: 3 }}
+                activeDot={{ r: 4, stroke: "var(--surface)", strokeWidth: 2 }}
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -90,4 +91,3 @@ export function MetricChart({
     </div>
   );
 }
-
