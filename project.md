@@ -26,4 +26,4 @@ The Python side trains agents in configurable grid worlds and exports run bundle
 - Export artifacts for the static viewer
 - Review run comparisons in the web app
 - Keep viewer styling centralized in `site/src/app/globals.css`
-
+- Deploy the Vercel site from the `site/` app using the root `vercel.json` build command
