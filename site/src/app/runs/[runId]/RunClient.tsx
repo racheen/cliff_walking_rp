@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { MetricChart } from "@/components/MetricCharts";
 import { QWedgeHeatmap } from "@/components/QWedgeHeatmap";
-import type { QValuesSnapshots, RunIndex, RunIndexEntry, RunSummary } from "@/lib/runs";
+import type { QValuesSnapshots, RunIndex, RunIndexEntry, RunMediaPaths, RunSummary } from "@/lib/runs";
 import { fetchRunIndex, fetchSummary } from "@/lib/runs";
 
 export function RunClient({ runId }: { runId: string }) {
@@ -14,7 +14,7 @@ export function RunClient({ runId }: { runId: string }) {
   const [qvalues, setQvalues] = useState<QValuesSnapshots | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const media = useMemo(() => summary?.media ?? {}, [summary]);
+  const media = useMemo<RunMediaPaths | null>(() => summary?.media ?? null, [summary]);
   const metrics = useMemo(() => summary?.metrics ?? {}, [summary]);
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export function RunClient({ runId }: { runId: string }) {
           />
         </div>
 
-        {(media.returns_png || media.steps_png) && (
+        {(media?.returns_png || media?.steps_png) && (
           <div style={{ marginTop: 16 }} className="small">
             PNGs are still available in the bundle for reference.
           </div>
